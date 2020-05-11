@@ -7,17 +7,20 @@ const initialState = {
 
 // Reducer
 const rootReducer = (state = initialState, action) => {
-  if (action.type === 'INC') {
-    return {
-      counter: state.counter + 1
-    }
+  switch (action.type) {
+    case 'INC':
+      return {
+        ...state,
+        counter: state.counter + 1
+      }
+    case 'ADD':
+      return {
+        ...state,
+        counter: state.counter + action.value
+      }
+    default:
+      return state
   }
-  if (action.type === 'ADD') {
-    return {
-      counter: state.counter + action.value
-    }
-  }
-  return state
 }
 
 // Store
