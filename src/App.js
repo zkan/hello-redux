@@ -27,11 +27,24 @@ const mapStateToProps = (state) => {
 const ConnectedCounter = connect(mapStateToProps)(Counter)
 
 // Defining mapDispatchToProps as a function
-const mapDisptachToProps = (dispatch) => {
-  return {
-    onIncrementCounter: () => dispatch({ type: 'INC' }),
-    onDecrementCounter: () => dispatch({ type: 'DEC' })
-  }
+// const mapDisptachToProps = (dispatch) => {
+//   return {
+//     onIncrementCounter: () => dispatch({ type: 'INC' }),
+//     onDecrementCounter: () => dispatch({ type: 'DEC' })
+//   }
+// }
+
+// Defining mapDispatchToProps as an object
+const onIncrementCounter = () => ({
+  type: 'INC'
+})
+const onDecrementCounter = () => ({
+  type: 'DEC'
+})
+
+const mapDisptachToProps = {
+  onIncrementCounter,
+  onDecrementCounter
 }
 
 const ConnectedAddButton = connect(null, mapDisptachToProps)(AddButton)
