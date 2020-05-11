@@ -4,7 +4,12 @@ import './App.css'
 
 const Counter = (props) => <div>{props.ctr}</div>
 
-const AddButton = (props) => <button onClick={props.onIncrementCounter}>+</button>
+const AddButton = (props) => (
+  <>
+    <button onClick={props.onIncrementCounter}>+</button>
+    <button onClick={props.onDecrementCounter}>-</button>
+  </>
+)
 
 function App() {
   return (
@@ -21,9 +26,11 @@ const mapStateToProps = (state) => {
 
 const ConnectedCounter = connect(mapStateToProps)(Counter)
 
+// Defining mapDispatchToProps as a function
 const mapDisptachToProps = (dispatch) => {
   return {
-    onIncrementCounter: () => dispatch({ type: 'INC' })
+    onIncrementCounter: () => dispatch({ type: 'INC' }),
+    onDecrementCounter: () => dispatch({ type: 'DEC' })
   }
 }
 
