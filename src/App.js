@@ -6,7 +6,7 @@ const Counter = (props) => <div>{props.ctr}</div>
 
 const AddButton = (props) => (
   <>
-    <button onClick={props.onIncrementCounter}>+</button>
+    <button onClick={props.onIncrementCounterAsync}>+</button>
     <button onClick={props.onDecrementCounter}>-</button>
   </>
 )
@@ -35,15 +35,26 @@ const ConnectedCounter = connect(mapStateToProps)(Counter)
 // }
 
 // Defining mapDispatchToProps as an object
-const onIncrementCounter = () => ({
-  type: 'INC'
-})
+function onIncrementCounter() {
+  return {
+    type: 'INC'
+  }
+}
+
+function onIncrementCounterAsync() {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(onIncrementCounter())
+    }, 500)
+  }
+}
+
 const onDecrementCounter = () => ({
   type: 'DEC'
 })
 
 const mapDisptachToProps = {
-  onIncrementCounter,
+  onIncrementCounterAsync,
   onDecrementCounter
 }
 
