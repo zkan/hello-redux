@@ -4,7 +4,7 @@ import './App.css'
 
 const Counter = (props) => <div>{props.ctr}</div>
 
-const AddButton = (props) => (
+const Buttons = (props) => (
   <>
     <button onClick={props.onIncrementCounterAsync}>+</button>
     <button onClick={props.onDecrementCounter}>-</button>
@@ -58,6 +58,6 @@ const mapDisptachToProps = {
   onDecrementCounter
 }
 
-const ConnectedAddButton = connect(null, mapDisptachToProps)(AddButton)
+const ConnectedAddButton = connect(null, mapDisptachToProps)(Buttons)
 
 export default App
