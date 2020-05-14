@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import './App.css'
+import { createAction } from '@reduxjs/toolkit'
 
 const Counter = (props) => <div>{props.ctr}</div>
 
@@ -35,13 +36,15 @@ const ConnectedCounter = connect(mapStateToProps)(Counter)
 // }
 
 // Defining mapDispatchToProps as an object
-function onIncrementCounter() {
-  return {
-    type: 'INC'
-  }
-}
+// function onIncrementCounter() {
+//   return {
+//     type: 'INC'
+//   }
+// }
 
-function onIncrementCounterAsync() {
+const onIncrementCounter = createAction('INC')
+
+const onIncrementCounterAsync = () => {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(onIncrementCounter())
@@ -49,9 +52,11 @@ function onIncrementCounterAsync() {
   }
 }
 
-const onDecrementCounter = () => ({
-  type: 'DEC'
-})
+// const onDecrementCounter = () => ({
+//   type: 'DEC'
+// })
+
+const onDecrementCounter = createAction('DEC')
 
 const mapDisptachToProps = {
   onIncrementCounterAsync,
