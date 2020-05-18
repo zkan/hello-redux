@@ -6,33 +6,32 @@ const initialState = {
 }
 
 // Reducer
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'INC':
-      return {
-        ...state,
-        counter: state.counter + 1
-      }
-    case 'ADD':
-      return {
-        ...state,
-        counter: state.counter + action.value
-      }
-    default:
-      return state
+const reducer = (state = initialState, action) => {
+  if (action.type == 'INC') {
+    return {
+      counter: state.counter + action.payload
+    }
   }
+  return state
 }
 
 // Store
-const store = createStore(rootReducer)
-console.log(store.getState())
+const store = createStore(reducer)
 
 // Subscription
 store.subscribe(() => {
-  console.log('[Subscription]', store.getState())
+  console.log('subscribe', store.getState())
 })
 
-// Dispatching Action
-store.dispatch({ type: 'INC' })
-store.dispatch({ type: 'ADD', value: 10 })
-console.log(store.getState())
+// Action (to be dispatched)
+// action มันจะมี type กับ payload หรือ data
+const addCounter = () => {
+  return {
+    type: 'INC',
+    payload: 1
+  }
+}
+
+// console.log('before', store.getState())
+store.dispatch(addCounter())
+// console.log('after', store.getState())

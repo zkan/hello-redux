@@ -1,68 +1,62 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import './App.css'
+import { connect } from 'react-redux'
 import { createAction } from '@reduxjs/toolkit'
 
-const Counter = (props) => <div>{props.ctr}</div>
+const Counter = (props) => {
+  return (
+    <div>
+      <div>{props.mappedCounter}</div>
+      <button onClick={() => props.increment(3)}>click me</button>
+    </div>
+  )
+}
+
+const increment = createAction('INC')
+
+// const mapDispatchToProps = {
+//   increment
+// }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    increment: (value) => dispatch(increment(value))
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    mappedCounter: state.counter
+  }
+}
+
+const ConnectedCounter = connect(mapStateToProps, mapDispatchToProps)(Counter)
 
 const Buttons = (props) => (
   <>
-    <button onClick={props.onIncrementCounterAsync}>+</button>
-    <button onClick={props.onDecrementCounter}>-</button>
+    <button onClick={() => props.increment(5)}>+</button>
+    <button>-</button>
   </>
 )
+
+// const INC = 'INC'
+// const increment = (number) => {
+//   return {
+//     type: INC,
+//     payload: number
+//   }
+// }
+
+const connectFunc = connect(null, mapDispatchToProps)
+const ConnectedButtons = connectFunc(Buttons)
 
 function App() {
   return (
     <div className='App'>
       <ConnectedCounter />
-      <ConnectedAddButton />
+      <ConnectedButtons />
     </div>
   )
 }
-
-const mapStateToProps = (state) => {
-  return { ctr: state.counter }
-}
-
-const ConnectedCounter = connect(mapStateToProps)(Counter)
-
-// Defining mapDispatchToProps as a function
-// const mapDisptachToProps = (dispatch) => {
-//   return {
-//     onIncrementCounter: () => dispatch({ type: 'INC' }),
-//     onDecrementCounter: () => dispatch({ type: 'DEC' })
-//   }
-// }
-
-// Defining mapDispatchToProps as an object
-// function onIncrementCounter() {
-//   return {
-//     type: 'INC'
-//   }
-// }
-
-const onIncrementCounter = createAction('INC')
-
-const onIncrementCounterAsync = () => {
-  return (dispatch) => {
-    setTimeout(() => {
-      dispatch(onIncrementCounter())
-    }, 500)
-  }
-}
-
-// const onDecrementCounter = () => ({
-//   type: 'DEC'
-// })
-
-const onDecrementCounter = createAction('DEC')
-
-const mapDisptachToProps = {
-  onIncrementCounterAsync,
-  onDecrementCounter
-}
-
-const ConnectedAddButton = connect(null, mapDisptachToProps)(Buttons)
 
 export default App
